@@ -1,5 +1,9 @@
-from models import engine
-from models.engine.file_storage import FileStorage
+#!/usr/bin/python3
+"""initialize"""
 
+from engine.file_storage import FileStorage
+
+
+"""retrive stotage"""
 storage = FileStorage()
 storage.reload()
