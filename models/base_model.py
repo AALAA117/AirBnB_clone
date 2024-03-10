@@ -5,7 +5,8 @@ from datetime import datetime
 from datetime import timedelta
 import models
 
-class BaseModel:
+
+class BaseModeil:
     """defines all common attributes/methods for other classes"""
 
     def __init__(self, *args, **kwargs):
@@ -17,10 +18,11 @@ class BaseModel:
             models.storage.new(self)
         else:
             d = {}
+            form = "%Y-%m-%dT%H:%M:%S.%f"
             for key, value in kwargs.items():
                 if key != "__class__":
                     if key == "created_at" or key == "updated_at":
-                        setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
+                        setattr(self, key, datetime.strptime(value, form))
                     else:
                         setattr(self, key, value)
 

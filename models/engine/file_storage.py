@@ -17,7 +17,7 @@ class FileStorage:
         FileStorage.__objects[key] = obj
 
     def save(self):
-        dic_to_json = { 
+        dic_to_json = {
                 key: obj.to_dict()
                 for key, obj in FileStorage.__objects.items()
                 }
@@ -26,7 +26,7 @@ class FileStorage:
 
     def reload(self):
         try:
-            with open(FileStorage.__file_path, "r", encoding="UTF8") as content:
+            with open(FileStorage.__file_path, "r") as content:
                 data_py = json.load(content)
         except Exception as err:
             pass
