@@ -3,10 +3,9 @@
 import uuid
 from datetime import datetime
 from datetime import timedelta
-import models
 
 
-class BaseModeil:
+class BaseModel:
     """defines all common attributes/methods for other classes"""
 
     def __init__(self, *args, **kwargs):
@@ -27,6 +26,7 @@ class BaseModeil:
                         setattr(self, key, value)
 
     def __str__(self):
+        """print a specific format for instances"""
         dic_str = {
                 "id": self.id,
                 "created_at": self.created_at,
@@ -38,10 +38,12 @@ class BaseModeil:
         return ("[{}] ({}) {}".format(name_class, self.id, dic_str))
 
     def save(self):
+        """update updated_time"""
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
+        """return dictionary of all instances"""
         dict_class = self.__dict__.copy()
         dict_class["created_at"] = str(self.created_at.isoformat())
         dict_class["updated_at"] = str(self.updated_at.isoformat())
