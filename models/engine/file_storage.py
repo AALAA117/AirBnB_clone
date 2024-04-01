@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """File Storage"""
 import json
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -19,17 +20,18 @@ class FileStorage:
 
     def save(self):
         """serializes __objects to the JSON file"""
-        dic_to_json = {
-                key: obj.to_dict()
-                for key, obj in FileStorage.__objects.items()
-                }
-        with open(FileStorage.__file_path, "w", encoding="UTF8") as f:
+        dic_to_json = {}
+        for key, obj in FileStorage.__objects.items():
+            dic_to_json[key] = obj.to_dict()
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
             json.dump(dic_to_json, f)
 
     def reload(self):
         """deserializes the JSON file to __objects"""
         try:
             with open(FileStorage.__file_path, "r") as content:
-                data_py = json.load(content)
+                data = json.load(content)
+            for key, value in data.items():
+                FileStorage.__objects[key] = eval(value['__class__'])(**value)
         except Exception as err:
             pass
