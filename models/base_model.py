@@ -36,7 +36,7 @@ class BaseModel:
                 'name': 'My First Model'
                 }
         name_class = self.__class__.__name__
-        return ("[{}] ({}) {}".format(name_class, self.id, dic_str))
+        return ("[{}] ({}) {}".format(name_class, self.id, self.__dict__))
 
     def save(self):
         """update updated_time"""
