@@ -4,6 +4,7 @@ import cmd
 import json
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -76,21 +77,20 @@ class HBNBCommand(cmd.Cmd):
             print(list_t)
 
     def do_update(self, line):
-        list_output = []
-        list_output.extend(line.split()[0:4])
-        if list_output[0] == "" or list_output[0] is None:
+        list_output = line.split()
+        if not list_output:
             print("** class name missing **")
             return
         if list_output[0] not in HBNBCommand.name_of_models:
             print("** class doesn't exist **")
             return
-        if list_output[1] == "" or list_output[1] is None:
+        if len(list_output) <= 1:
             print("** instance id missing **")
             return
-        if list_output[2] == "" or list_output[2] is None:
+        if len(list_output) <= 2:
             print("** attribute name missing **")
             return
-        if list_output[3] == "" or list_output[3] is None:
+        if len(list_output) <= 3:
             print("** value missing **")
             return
         else:
@@ -99,10 +99,11 @@ class HBNBCommand(cmd.Cmd):
             if key in all_objs.keys():
                 if type(eval(list_output[3])) != str:
                     setattr(all_objs[key], list_output[2],
-                            eval(list_output[3]))
+                            eval(list_output[0][3]))
                 else:
                     arg_str = list_output[3].replace('"', '')
                     setattr(all_objs[key], list_output[2], arg_str)
+                    print(list_output)
             else:
                 print("** no instance found **")
 
